@@ -1,54 +1,23 @@
 import goblinImg from './img/goblin.png';
 
 export default class Goblin {
-  constructor(cells, scoreEl, missEl) {
-    this.cells = cells;
-    this.scoreEl = scoreEl;
-    this.missEl = missEl;
-    this.score = 0;
-    this.missed = 0;
-    this.maxMissed = 5;
-    this.active = false;
-
-    this.img = document.createElement('img');
-    this.img.src = goblinImg;
-    this.img.alt = 'Goblin';
-    this.img.classList.add('goblin');
-
-    this.img.addEventListener('click', () => {
-      if (this.active) {
-        this.score++;
-        this.scoreEl.textContent = `Score: ${this.score}`;
-        this.removeGoblin();
-      }
-    });
+  constructor() {
+    this.el = document.createElement('img');
+    this.el.src = goblinImg;
+    this.el.alt = 'goblin';
+    this.el.classList.add('goblin');
   }
 
-  moveGoblin() {
-    const newIndex = Math.floor(Math.random() * this.cells.length);
-    this.cells[newIndex].append(this.img);
-    this.active = true;
-
-    setTimeout(() => {
-      if (this.active) {
-        this.missed++;
-        this.missEl.textContent = `Missed: ${this.missed}`;
-        this.removeGoblin();
-        if (this.missed >= this.maxMissed) {
-          alert('Game over!');
-          window.location.reload();
-        }
-      }
-    }, 1000);
+  attachTo(cell) {
+    cell.append(this.el);
   }
 
-  removeGoblin() {
-    this.img.remove();
-    this.active = false;
+  remove() {
+    if (this.el.parentNode) this.el.parentNode.removeChild(this.el);
   }
 
-  start() {
-    this.moveGoblin();
-    this.interval = setInterval(() => this.moveGoblin(), 1500);
+  onClick(handler) {
+    // устанавливаем обработчик клика (один)
+    this.el.onclick = handler;
   }
 }
