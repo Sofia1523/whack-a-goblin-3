@@ -6,21 +6,31 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    clean: true,
+    clean: true
   },
   module: {
     rules: [
-      { test: /\.css$/i, use: ['style-loader', 'css-loader'] },
       {
-        test: /\.(png|jpe?g|gif|svg)$/i,
-        type: 'asset/resource',
-        generator: { filename: 'img/[name][hash][ext]' },
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader']
       },
-    ],
+      {
+        test: /\.(png|jpg|jpeg|gif|svg)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'img/[name][hash][ext][query]'
+        }
+      }
+    ]
   },
   plugins: [
-    new HtmlWebpackPlugin({ template: './src/index.html' }),
+    new HtmlWebpackPlugin({
+      template: './src/index.html'
+    })
   ],
-  devServer: { static: './dist', open: true },
-  mode: 'development',
+  devServer: {
+    static: './dist',
+    open: true
+  },
+  mode: 'development'
 };
