@@ -7,7 +7,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "start": "webpack serve --mode development",
-    "build": "webpack --mode production",
+    "build": "rmdir /s /q dist && mkdir dist && xcopy src dist /E /I /Y",
     "test": "jest --coverage",
     "test:e2e": "jest --config ./e2e/jest-puppeteer.config.js"
   },
